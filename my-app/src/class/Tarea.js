@@ -44,4 +44,5 @@ class Tarea{
        }
        return result;
     }
-}
+} 
+export default Tarea

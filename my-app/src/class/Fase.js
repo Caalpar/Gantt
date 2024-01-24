@@ -44,4 +44,4 @@ class Fase{
 
 
 }
-
+export default Fase

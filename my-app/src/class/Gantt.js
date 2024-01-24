@@ -48,3 +48,4 @@ class Gantt{
     }
 
 }
+export default Gantt
