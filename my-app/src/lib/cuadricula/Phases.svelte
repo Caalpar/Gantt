@@ -61,6 +61,11 @@
     <div class="">PROGRESO</div>
     <div class="">INICIO</div>
     <div class="">FIN</div>
+    <div>‎ </div>
+    <div>‎ </div>
+    <div>‎ </div>
+    <div>‎ </div>
+    <div>‎ </div>
 </div>
 <div class="grid-container">
     {#each Fases as fase}
@@ -88,7 +93,6 @@
      word-wrap: break-word
   }
 
- 
   .title-phase{
     grid-column: 1/6;
     color: black;
