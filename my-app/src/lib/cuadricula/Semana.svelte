@@ -1,6 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import Procentaje2 from "./Porcentaje2.svelte";
+  import {ubicacionWeek} from "../../store/Calendari"
 
   let startDate;
   let daysOfWeek = ["LU", "MA", "MI", "JU", "VI", "SA", "DO"];
@@ -21,6 +22,7 @@
     // Asegúrate de que startDate sea un lunes
     startDate = new Date();
     startDate.setDate(startDate.getDate() - startDate.getDay() + 1);
+    startDate.setDate(startDate.getDate() + $ubicacionWeek * 7)
     generateWeeks();
   });
 
@@ -57,9 +59,9 @@
 
 <div class="grid-weekend">
   {#each weeks as { days, startDate }, indexWeek}
-  {#if indexWeek==0}
-  <div class="grid-day ">
-    {#each daysOfWeek as day, indexDay (day)}
+    {#if indexWeek==0}
+      <div class="grid-day ">
+      {#each daysOfWeek as day, indexDay (day)}
     {#if indexDay==0}
     <div class="border-right border-left">{day}</div>
     {:else}
@@ -68,23 +70,22 @@
 
     {/each}
     {#each days as day, indexDay2 (day)}
-          {#if indexDay2==0}
+      {#if indexDay2==0}
           <div class="border-right border-left">{day.getDate()}</div>
-          {:else}
+      {:else}
           <div class="border-right">{day.getDate()}</div>
-          {/if}
+      {/if}
     {/each}
   
       {#each array2 as item, index}
-      {#each array as item, index2}
-      {#if index2==0||index2%7==0}
-      <Procentaje2 setIDS={setID} borderLeft={true}/>
-      {:else}
-      <Procentaje2 setIDS={setID}/>
-      {/if}
-           
+        {#each array as item, index2}
+          {#if index2==0||index2%7==0}
+            <Procentaje2 setIDS={setID} indexDay={index2} indexNum={ indexWeek} borderLeft={true}/>
+          {:else}
+            <Procentaje2 setIDS={setID} indexDay={index2} indexNum={ indexWeek}/>
+          {/if}
+        {/each}
       {/each}
-       {/each}
   
   </div>
 
@@ -100,7 +101,7 @@
   
       {#each array2 as item, index}
       {#each array as item, index2}
-      <Procentaje2 setIDS={setID}/>
+      <Procentaje2 setIDS={setID} indexDay={index2} indexNum={ indexWeek}/>
       {/each}
        {/each}
   
