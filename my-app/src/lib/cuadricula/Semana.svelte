@@ -47,13 +47,13 @@
   }
 
   let array=[]
-    for (let index = 0; index < 56; index++) {
+    for (let index = 0; index < 7000; index++) {
         array.push(index)
         
     }
     
     let array2=[]
-    for (let index = 0; index < 9; index++) {
+    for (let index = 0; index < 1; index++) {
         array2.push(index)}
 </script>
 

@@ -1,58 +1,7 @@
 <script>
-    
-    let Fases=[{
-        name:"Inicio",
-        tareas:[{
-            name:"Ideas",
-            encargado:"Darwin",
-            progreso: 0,
-            inicio:0,
-            fin:0      
-        },
 
-        {
-            name:"Ideas2",
-            encargado:"Darwin2",
-            progreso: 0,
-            inicio:0,
-            fin:0      
-        },
+    import {Phases} from "../../store/Phases"
 
-        {
-            name:"Ideas3",
-            encargado:"Darwin3",
-            progreso: 0,
-            inicio:0,
-            fin:0      
-        }]
-    },
-    
-    {
-        name:"Fin",
-        tareas:[{
-            name:"Ideas",
-            encargado:"Darwin",
-            progreso: 0,
-            inicio:0,
-            fin:0      
-        },
-
-        {
-            name:"Ideas2",
-            encargado:"Darwin2",
-            progreso: 0,
-            inicio:0,
-            fin:0      
-        },
-
-        {
-            name:"Ideas3",
-            encargado:"Darwin3",
-            progreso: 0,
-            inicio:0,
-            fin:0      
-        }]
-    }]
 </script>
 <div>
 <div class="grid-container">
@@ -68,14 +17,14 @@
     <div>‎ </div>
 </div>
 <div class="grid-container">
-    {#each Fases as fase}
+    {#each $Phases as fase}
          <div class="title-phase">{fase.name}</div>
          {#each fase.tareas as tarea}
          <div class="task">{tarea.name}</div>
          <div>{tarea.encargado}</div>
          <div>{tarea.progreso}</div>
-         <div>{tarea.inicio}</div>
-         <div>{tarea.fin}</div>
+         <div>{tarea.inicio.toLocaleDateString()}</div>
+         <div>{tarea.fin.toLocaleDateString()}</div>
          {/each}
     {/each}
 </div>
