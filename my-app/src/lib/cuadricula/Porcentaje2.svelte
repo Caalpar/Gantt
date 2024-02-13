@@ -9,6 +9,13 @@
         borderLeftStyle="border-left"  
     } 
 
+    let fechaInicio = 0
+    let fechaFin = 0
+    let cantidadDias = 0 
+    let porcentajeUnidad = 0
+    let fechaActual = 0
+    let borderToday= " "
+
     let numColumn
     let numRow  
     export let setIDS
@@ -61,33 +68,38 @@
     date.setDate(date.getDate() + ($ubicacionWeek*7) ) 
     date.setDate(date.getDate() + indexDay2+($ubicacionWeek*7)+indexNum*7)
     dateShow = date.getDate().toString()
-    
+
+    let date2  = new Date()
+    if (date2.getDate() ==  date.getDate()) {
+      borderToday= "borderToday"
+    }
     
 
     for (let index = 0; index < $Phases.length; index++) {
       const {tareas} = $Phases[index];
-      const [tarea1 , tarea2 , tarea3] = tareas
-      if ( tarea1.inicio.getTime() <= date.getTime() && tarea1.fin.getTime() >= date.getTime() && tarea1.id == indexDay3) {
-        isTask = "noni"
-        console.log(tarea1.id)
-        break
+      for (let index2 = 0; index2 < tareas.length; index2++) {
+        const tarea = tareas[index2];
+        if ( tarea.inicio.getTime() <= date.getTime() && tarea.fin.getTime() >= date.getTime() && tarea.id == indexDay3) {
+          isTask = "noni"
+          fechaInicio= tarea.inicio.getTime()
+          fechaFin=  tarea.fin.getTime()
+          fechaActual = Math.round((date.getTime() - fechaInicio)/1000/60/60/24)+1
+          cantidadDias =Math.round((fechaFin - fechaInicio)/1000/60/60/24)
+          porcentajeUnidad = Math.round((100 / cantidadDias))*fechaActual
+          if (tarea.progreso>= porcentajeUnidad) {
+            isTask = "ready"
+          }
+          console.log(tarea.id)
+          break
+        }
       }
-      if ( tarea2.inicio.getTime() <= date.getTime() && tarea2.fin.getTime() >= date.getTime() && tarea2.id == indexDay3) {
-        isTask = "noni"
-        console.log(tarea1.id)
-        break
-      }
-      if ( tarea3.inicio.getTime() <= date.getTime() && tarea3.fin.getTime() >= date.getTime() && tarea3.id == indexDay3) {
-        isTask = "noni"
-        console.log(tarea1.id)
-        break
-      }
+      
      
     }
    
   })
 </script>
-<div class="border-right {borderLeftStyle} {isTask}">{indexDay3}</div>
+<div class="border-right {borderLeftStyle} {isTask} {borderToday}">‎</div>
 <!-- <div class="border-right {borderLeftStyle}">‎</div> -->
 
 <style>
@@ -99,5 +111,12 @@
 }
 .noni{
   background-color: rgb(0, 251, 255);
+}
+.ready{
+  background-color: blue;
+}
+.borderToday{
+  border-left:1px solid red ;
+  border-right:1px solid red ;
 }
 </style>

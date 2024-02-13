@@ -18,7 +18,7 @@ export const Phases = writable([{
     tareas:[{
         name:"Ideas",
         encargado:"Darwin",
-        progreso: 0,
+        progreso: 80,
         inicio:currentDate,
         fin:nextDate,
         id:7 
@@ -27,7 +27,7 @@ export const Phases = writable([{
     {
         name:"Ideas2",
         encargado:"Darwin2",
-        progreso: 0,
+        progreso: 30,
         inicio:currentDate2,
         fin:nextDate2,
         id:14
@@ -36,7 +36,7 @@ export const Phases = writable([{
     {
         name:"Ideas3",
         encargado:"Darwin3",
-        progreso: 0,
+        progreso: 60,
         inicio:currentDate3,
         fin:nextDate3,
         id:21   
