@@ -4,7 +4,7 @@
   import { ubicacionWeek } from "../../store/Calendari";
 
   let startDate;
-  let daysOfWeek = ["LU", "MA", "MI", "JU", "VI", "SA", "DO"];
+  let daysOfWeek = ["DO","LU", "MA", "MI", "JU", "VI", "SA" ];
   let weeks = [];
   let displayWeek = 1;
 
