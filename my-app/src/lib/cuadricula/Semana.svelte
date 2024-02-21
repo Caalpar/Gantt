@@ -8,6 +8,8 @@
   let weeks = [];
   let displayWeek = 1;
 
+console.log(daysOfWeek[0])
+
   let column = 0;
   let row = 0;
 
@@ -63,22 +65,24 @@
   {#each weeks as { days, startDate }, indexWeek}
     {#if indexWeek == 0}
       <div class="grid-day">
-        {#each daysOfWeek as day, indexDay (day)}
-          {#if indexDay == 0}
-            <div class="border-right border-left">{day}</div>
+        {#each days as day, indexDay2 (day)}
+          {#if fechaActual.getDate() ==  day.getDate()}
+            <div class="borderToday">{daysOfWeek[day.getDay()]}</div>
+          {:else if indexDay2 == 0}
+            <div class="border-right border-left ">{daysOfWeek[day.getDay()]}</div>
           {:else}
-            <div class="border-right">{day}</div>
+            <div class="border-right">{daysOfWeek[day.getDay()]}</div>
           {/if}
         {/each}
         {#each days as day, indexDay2 (day)}
-          {#if fechaActual.getDate() ==  day.getDate()}
-            <div class="borderToday">{day.getDate()}</div>
-          {:else if indexDay2 == 0}
-            <div class="border-right border-left ">{day.getDate()}</div>
-          {:else}
-            <div class="border-right">{day.getDate()}</div>
-          {/if}
-        {/each}
+        {#if fechaActual.getDate() ==  day.getDate()}
+          <div class="borderToday">{day.getDate()}</div>
+        {:else if indexDay2 == 0}
+          <div class="border-right border-left ">{day.getDate()}</div>
+        {:else}
+          <div class="border-right">{day.getDate()}</div>
+        {/if}
+      {/each}
 
         {#each array2 as item, index}
           {#each array as item, index2}
@@ -101,13 +105,12 @@
       </div>
     {:else}
       <div class="grid-day">
-        {#each daysOfWeek as day, indexDay (day)}
-          <div class="border-right">{day}</div>
+        {#each days as day (day)}
+          <div class="border-right">{daysOfWeek[day.getDay()]}</div>
         {/each}
         {#each days as day (day)}
           <div class="border-right">{day.getDate()}</div>
         {/each}
-
         {#each array2 as item, index}
           {#each array as item, index2}
             <Procentaje2

@@ -1,6 +1,4 @@
-@font-face {
-    src: url('assets/Barlow-Regular.ttf') format('truetype');
-    font-family: 'barlow-regular';
-    font-style: normal;
-    font-weight: normal;    
-  }
+:root {
+--color-porcentaje:rgb(130, 169, 255);
+
+}
