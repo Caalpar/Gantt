@@ -60,23 +60,78 @@
       }
       $Phases[indexFase].tareas.push(
         {
-        name:"NewTask",
+          name:"NewTask",
         encargado:"Name",
         progreso: 0,
         inicio:new Date(),
         fin:new Date(),
         id:filaNum 
-        }
+      }
       )
       $Phases=$Phases
-
+      
       
     }
-
+    
     function eliminarFase(index) {
       $Phases.splice(index,1)
       $Phases=$Phases
       
+    }
+    
+    function eliminarTarea(index2, fasename) {
+      
+      let indexFase2=-1
+      
+      // necesito saber en que fase esta la tarea que voy a eliminar
+      for (let index = 0; index < $Phases.length; index++) {
+        const fase = $Phases[index];
+        
+        if (fasename==fase.name) {
+          indexFase2=index
+          break
+        }
+        
+      }
+      
+      // necesito saber que tarea voy a eliminar
+      // una vez teniendo estos datos como elimino la tareae
+      $Phases[indexFase2].tareas.splice(index2, 1)
+      
+      $Phases=$Phases
+    }
+
+    function buscarFase(fasename) {
+        
+      let indexFase2=-1
+      
+      for (let index = 0; index < $Phases.length; index++) {
+        const fase = $Phases[index];
+        
+        if (fasename==fase.name) {
+          indexFase2=index
+          break
+        }
+        
+      }
+      return indexFase2
+      
+    }
+    
+    let indexFaseEdit=-1
+    
+    function editarFase(index, value) {
+      $Phases[index].name=value.target.value
+      indexFaseEdit=-1
+      // console.log(value)
+      
+      $Phases=$Phases
+    }
+    
+
+    function activarInput(index) {
+      indexFaseEdit=index
+      $Phases=$Phases
     }
 
 </script>
@@ -99,7 +154,11 @@
 </div>
 <div class="grid-container">
     {#each $Phases as fase, index}
-         <div class="title-phase">{fase.name}</div>
+          {#if index!=indexFaseEdit}
+              <div on:click={()=>{activarInput(index)}} class="title-phase" >{fase.name}</div>
+          {:else} 
+           <input on:change={(e)=>{editarFase(index, e)}} class="title-phase" value={fase.name}/>
+         {/if}
          {#if index==0}
          <button on:click={()=>{agregarFase()}}>Agregar F</button>
          <button on:click={()=>{eliminarFase(index)}}>Eliminar F</button>
@@ -116,10 +175,10 @@
          <div>{tarea.fin.toLocaleDateString()}</div>
          {#if fase.tareas.length-1==index2}
          <button on:click={()=>{agregarTareas(fase.name)}} >Agregar</button>
-         <button>Eliminar</button>
+         <button on:click={()=>{eliminarTarea(index2, fase.name)}} >Eliminar</button>
          {:else}           
           <div>‎ </div>
-           <button>Eliminar</button>
+           <button on:click={()=>{eliminarTarea(index2, fase.name)}} >Eliminar</button>
          {/if}
          {/each}
     {/each}
