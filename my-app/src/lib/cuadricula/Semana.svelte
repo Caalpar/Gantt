@@ -59,6 +59,7 @@ console.log(daysOfWeek[0])
   for (let index = 0; index < 1; index++) {
     array2.push(index);
   }
+
 </script>
 
 <div class="grid-weekend">

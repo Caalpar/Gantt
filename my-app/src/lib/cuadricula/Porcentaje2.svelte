@@ -59,7 +59,10 @@
 
     let isTask = " "
 
-    onMount(() => {
+  onMount(() => {
+    updateTarea()
+  })
+  function updateTarea() {
     let ID=setIDS()
     numRow=ID.row
     numColumn=ID.column
@@ -74,7 +77,6 @@
       borderToday= "borderToday"
     }
     
-
     for (let index = 0; index < $Phases.length; index++) {
       const {tareas} = $Phases[index];
       for (let index2 = 0; index2 < tareas.length; index2++) {
@@ -93,11 +95,43 @@
           break
         }
       }
-      
-     
+    } 
+  }
+  $:{
+    let ID=setIDS()
+    numRow=ID.row
+    numColumn=ID.column
+    let date = new Date()
+    date.setDate(date.getDate() - date.getDay() + 1);
+    date.setDate(date.getDate() + ($ubicacionWeek*7) ) 
+    date.setDate(date.getDate() + indexDay2+($ubicacionWeek*7)+indexNum*7)
+    dateShow = date.getDate().toString()
+
+    let date2  = new Date()
+    if (date2.getDate() ==  date.getDate()) {
+      borderToday= "borderToday"
     }
-   
-  })
+    
+    for (let index = 0; index < $Phases.length; index++) {
+      const {tareas} = $Phases[index];
+      for (let index2 = 0; index2 < tareas.length; index2++) {
+        const tarea = tareas[index2];
+        if ( tarea.inicio.getTime() <= date.getTime() && tarea.fin.getTime() >= date.getTime() && tarea.id == indexDay3) {
+          isTask = "noni"
+          fechaInicio= tarea.inicio.getTime()
+          fechaFin=  tarea.fin.getTime()
+          fechaActual = Math.round((date.getTime() - fechaInicio)/1000/60/60/24)+1
+          cantidadDias =Math.round((fechaFin - fechaInicio)/1000/60/60/24)+1
+          porcentajeUnidad = Math.round((100 / cantidadDias))*fechaActual
+          if (tarea.progreso>= porcentajeUnidad) {
+            isTask = "ready"
+          }
+          console.log(tarea.id)
+          break
+        }
+      }
+    } 
+  }
 </script>
 <div class="border-right {borderLeftStyle} {isTask} {borderToday}">‎</div>
 <!-- <div class="border-right {borderLeftStyle}">‎</div> -->

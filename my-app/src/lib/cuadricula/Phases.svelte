@@ -1,4 +1,6 @@
 <script>
+    import Fase from "../../class/Fase";
+
 
     import {Phases} from "../../store/Phases"
 
@@ -101,23 +103,27 @@
       $Phases=$Phases
     }
 
-    function buscarFase(fasename) {
-        
-      let indexFase2=-1
-      
-      for (let index = 0; index < $Phases.length; index++) {
-        const fase = $Phases[index];
-        
-        if (fasename==fase.name) {
-          indexFase2=index
-          break
-        }
-        
+    let indexTareaEdit=" "
+
+    function editarTarea(indexFase , indexTarea , property, value) {
+      indexTareaEdit=" "
+      console.log(value)
+      if (property == "inicio" ||property == "fin") {
+        $Phases[indexFase].tareas[indexTarea][property]= new Date (value.target.value)
+      } else {
+        $Phases[indexFase].tareas[indexTarea][property]= value.target.value
       }
-      return indexFase2
+
       
+      $Phases = $Phases
     }
-    
+
+    function activarInputTarea(indexFase , indexTarea, indexInput) {
+      indexTareaEdit= indexFase + "-" + indexTarea + "-" + indexInput
+
+      $Phases=$Phases
+    }
+
     let indexFaseEdit=-1
     
     function editarFase(index, value) {
@@ -127,12 +133,12 @@
       
       $Phases=$Phases
     }
-    
 
     function activarInput(index) {
       indexFaseEdit=index
       $Phases=$Phases
     }
+
 
 </script>
 <div>
@@ -168,11 +174,31 @@
          <button on:click={()=>{eliminarFase(index)}}>Eliminar F</button>
          {/if}
          {#each fase.tareas as tarea, index2}
-         <div class="task">{tarea.name}</div>
-         <div>{tarea.encargado}</div>
-         <div class="porcentaje-{tarea.progreso}">{tarea.progreso}</div>
-         <div>{tarea.inicio.toLocaleDateString()}</div>
-         <div>{tarea.fin.toLocaleDateString()}</div>
+          {#if index +"-" + index2 + "-0" != indexTareaEdit }
+              <div class="task" on:click={()=> {activarInputTarea(index , index2 , "0")}}>{tarea.name}</div>
+          {:else}
+              <input on:change={(e)=>{editarTarea(index, index2 , "name", e)}} class="task" value={tarea.name}>
+          {/if}
+          {#if index +"-" + index2 + "-1" != indexTareaEdit }
+              <div on:click={()=> {activarInputTarea(index , index2 , "1")}}>{tarea.encargado}</div>
+          {:else}
+              <input on:change={(e)=>{editarTarea(index, index2 , "encargado", e)}} value={tarea.encargado}>
+          {/if}
+          {#if index +"-" + index2 + "-2" != indexTareaEdit }
+              <div on:click={()=> {activarInputTarea(index , index2 , "2")}}>{tarea.progreso}</div>
+          {:else}
+              <input on:change={(e)=>{editarTarea(index, index2 , "progreso", e)}}  value={tarea.progreso}>
+          {/if}
+          {#if index +"-" + index2 + "-3" != indexTareaEdit }
+              <div on:click={()=> {activarInputTarea(index , index2 , "3")}}>{tarea.inicio.toLocaleDateString()}</div>
+          {:else}
+              <input type="datetime-local" on:change={(e)=>{editarTarea(index, index2 , "inicio", e)}} value={tarea.inicio}>
+          {/if}
+          {#if index +"-" + index2 + "-4" != indexTareaEdit }
+              <div on:click={()=> {activarInputTarea(index , index2 , "4")}}>{tarea.fin.toLocaleDateString()}</div>
+          {:else}
+              <input type="datetime-local" on:change={(e)=>{editarTarea(index, index2 , "fin", e)}} value={tarea.fin}>
+          {/if}
          {#if fase.tareas.length-1==index2}
          <button on:click={()=>{agregarTareas(fase.name)}} >Agregar</button>
          <button on:click={()=>{eliminarTarea(index2, fase.name)}} >Eliminar</button>
@@ -190,7 +216,7 @@
     display: grid;
     grid-template-columns: repeat(7,14.2%);
     color: rgb(91, 88, 88);
-    font-size: 16px;
+    font-size: 15px;
     font-family: Barlow;
     font-weight: 400;
     line-height:35px;
